@@ -14,30 +14,13 @@ class Recents extends StatelessWidget {
           style: TextStyle(fontSize: 8 * 3, fontWeight: FontWeight.w600),
         ),
         Expanded(
-          child: ListView(
-            children: [
-              RecentItem(
-                label: "Sample Image",
-                createdAt: DateTime.now().toString(),
-              ),
-              RecentItem(
-                label: "Sample Image",
-                createdAt: DateTime.now().toString(),
-              ),
-              RecentItem(
-                label: "Sample Image",
-                createdAt: DateTime.now().toString(),
-              ),
-              RecentItem(
-                label: "Sample Image",
-                createdAt: DateTime.now().toString(),
-              ),
-              RecentItem(
-                label: "Sample Image",
-                createdAt: DateTime.now().toString(),
-              ),
-            ],
-          ),
+          child: ListView.builder(
+              itemCount: 8,
+              itemBuilder: (context, index) => RecentItem(
+                    index: index.toString(),
+                    label: "Sample Image",
+                    createdAt: DateTime.now().toString(),
+                  )),
         )
       ],
     );
