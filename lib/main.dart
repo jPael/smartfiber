@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smartfiber/pages/splash_page.dart';
+import 'package:smartfiber/provider/camera_provider.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(MultiProvider(
+    providers: [ChangeNotifierProvider(create: (_) => CameraProvider())],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,9 +21,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.lightGreenAccent,
-            secondary: const Color(0xFF95D27F),
-            tertiary: const Color(0xFFE4E4EA)),
+          seedColor: const Color(0xFF14BC23),
+          secondary: const Color(0xFFFFC000),
+        ),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,

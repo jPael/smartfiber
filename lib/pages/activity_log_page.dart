@@ -1,0 +1,14 @@
+import 'package:flutter/material.dart';
+
+class ActivityLogPage extends StatelessWidget {
+  const ActivityLogPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [Text("Activity Log")],
+      ),
+    );
+  }
+}

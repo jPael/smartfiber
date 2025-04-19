@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smartfiber/components/button/custom_button.dart';
+import 'package:smartfiber/pages/home_layout_page.dart';
 import 'package:smartfiber/pages/home_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -9,8 +11,7 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage>
-    with SingleTickerProviderStateMixin {
+class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _opacityAnimation;
 
@@ -50,8 +51,7 @@ class _SplashPageState extends State<SplashPage>
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         forceMaterialTransparency: true,
-        systemOverlayStyle:
-            SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+        systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.transparent),
         backgroundColor: Colors.transparent,
       ),
       body: Container(
@@ -59,44 +59,84 @@ class _SplashPageState extends State<SplashPage>
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/images/splash_screen_bg.jpg"),
-                fit: BoxFit.cover)),
-        child: Center(
-            child: FadeTransition(
+                image: AssetImage("assets/images/splash_screen_bg.jpg"), fit: BoxFit.cover)),
+        child: FadeTransition(
           opacity: _opacityAnimation,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("assets/images/smartfiber_logo.png"),
-              const SizedBox(
-                height: 8 * 2,
-              ),
-              Text(
-                "SmartFiber",
-                style: TextStyle(
-                    fontSize: 8 * 5,
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.secondary),
-              ),
-              const SizedBox(
-                height: 8 * 22,
-              ),
-              GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const HomePage())),
-                child: Text(
-                  "Get started",
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 8 * 3,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Theme.of(context).colorScheme.secondary,
-                      fontWeight: FontWeight.w600),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 15 * 8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Text(
+                  "Welcome to SmartFiber",
+                  style: TextStyle(fontSize: 4 * 8, fontWeight: FontWeight.w900),
                 ),
-              )
-            ],
+                const Text(
+                  "Powered by AI Detection",
+                  style: TextStyle(fontSize: 4 * 5, fontStyle: FontStyle.italic),
+                ),
+                const SizedBox(
+                  height: 8 * 8,
+                ),
+                Image.asset(
+                  "assets/images/smartfiber_logo.png",
+                  width: MediaQuery.of(context).size.width * 0.75,
+                ),
+                // const SizedBox(
+                //   height: 8 * 2,
+                // ),
+                // Text(
+                //   "SmartFiber",
+                //   style: TextStyle(
+                //       fontSize: 8 * 5,
+                //       fontWeight: FontWeight.w600,
+                //       color: Theme.of(context).colorScheme.secondary),
+                // ),
+                const SizedBox(
+                  height: 8 * 15,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0 * 4),
+                        child: CustomButton(
+                          type: CustomButtonType.secondary,
+                          onPress: () => Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => const HomeLayoutPage())),
+                          label: "Let's Start",
+                          labelStyle: TextStyle(
+                              fontSize: 4 * 6, color: Colors.white, fontWeight: FontWeight.bold),
+                          customButtonStyle: ButtonStyle(
+                            iconColor: WidgetStateProperty.all(Colors.white),
+                            shape: WidgetStateProperty.all(
+                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
+                            padding: WidgetStateProperty.all(
+                                EdgeInsets.symmetric(horizontal: 8.0 * 4, vertical: 8.0 * 2)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+
+                // GestureDetector(
+                //   onTap: () => Navigator.push(
+                //       context, MaterialPageRoute(builder: (context) => const HomePage())),
+                //   child: Text(
+                //     "Get started",
+                //     style: TextStyle(
+                //         color: Theme.of(context).colorScheme.secondary,
+                //         fontSize: 8 * 3,
+                //         decoration: TextDecoration.underline,
+                //         decorationColor: Theme.of(context).colorScheme.secondary,
+                //         fontWeight: FontWeight.w600),
+                //   ),
+                // )
+              ],
+            ),
           ),
-        )),
+        ),
       ),
     );
   }

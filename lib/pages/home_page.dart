@@ -8,19 +8,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        forceMaterialTransparency: true,
-        title: Text(
-          "SmartFiber",
-          style: TextStyle(fontWeight: FontWeight.w900, fontSize: 8 * 4),
-        ),
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-      ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding:
-            const EdgeInsets.symmetric(horizontal: 8.0 * 2, vertical: 8 * 2),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0 * 2, vertical: 8 * 2),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -28,19 +18,23 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 8 * 4,
             ),
-            Expanded(child: Recents())
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Recents(),
+            ))
           ],
         ),
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.large(
-        onPressed: () {},
-        child: Icon(
-          Icons.camera_rounded,
-          color: Colors.white,
-          size: 50,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton.large(
+      //   onPressed: () {},
+      //   child: Icon(
+      //     Icons.camera_rounded,
+      //     color: Colors.white,
+      //     size: 50,
+      //   ),
+      // ),
     );
   }
 }

@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smartfiber/pages/scan_result_page.dart';
 
 class RecentItem extends StatelessWidget {
-  const RecentItem(
-      {super.key,
-      required this.label,
-      required this.createdAt,
-      required this.index});
+  const RecentItem({super.key, required this.label, required this.createdAt, required this.index});
 
   final String index;
   final String label;
@@ -18,12 +14,7 @@ class RecentItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => _gotoDetailsPage(context, heroTag),
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Theme.of(context).colorScheme.tertiary)),
-        padding: const EdgeInsets.all(8),
+      child: Card(
         child: Row(
           children: [
             Hero(
@@ -44,8 +35,7 @@ class RecentItem extends StatelessWidget {
                   Text(
                     label,
                     overflow: TextOverflow.fade,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 8 * 2.5),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 8 * 2.5),
                   ),
                   Text(
                     createdAt,
