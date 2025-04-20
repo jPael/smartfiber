@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smartfiber/models/barangay.dart';
+import 'package:smartfiber/services/laravel/user_services.dart';
 // import 'package:smartfiber/services/laravel/barangay_services.dart';
 
 class BarangaySelector extends StatefulWidget {
@@ -17,7 +18,7 @@ class BarangaySelector extends StatefulWidget {
 class BarangaySelectorState extends State<BarangaySelector> {
   String defaultValue = "";
   bool fetchingBarangay = false;
-  List<Barangay> barangays = [];
+  List<String> barangays = [];
 
   Future<void> _fetchBarangay() async {
     setState(() {
@@ -25,13 +26,13 @@ class BarangaySelectorState extends State<BarangaySelector> {
     });
 
     // await Future.delayed(Duration(seconds: 3));
-    // final _barangays = await BarangayServices().fetchALlBarangays();
+    final _barangays = await fetchAllBarangays();
 
-    // setState(() {
-    //   defaultValue = _barangays.first.name;
-    //   widget.onChange(defaultValue);
-    //   barangays = _barangays;
-    // });
+    setState(() {
+      defaultValue = _barangays.first;
+      widget.onChange(defaultValue);
+      barangays = _barangays;
+    });
 
     setState(() {
       fetchingBarangay = false;
@@ -69,15 +70,14 @@ class BarangaySelectorState extends State<BarangaySelector> {
             ),
             value: defaultValue,
             onChanged: (value) {
-              widget.onChange(value);
+              widget.onChange(value as String);
               setState(() {
-                defaultValue = value!;
+                defaultValue = value;
               });
             },
-            items:
-                barangays.map((b) => DropdownMenuItem(value: b.name, child: Text(b.name))).toList(),
+            items: barangays.map((b) => DropdownMenuItem(value: b, child: Text(b))).toList(),
             validator: (value) {
-              if (value == null || value.isEmpty) {
+              if (value == null) {
                 return "Please select your barangay";
               }
               return null;

@@ -5,6 +5,7 @@ class LaravelPaths {
   static const String login = "/api/login";
 
   static const String predict = "/api/yolo9";
+  static const String allBarangay = "/api/barangays";
   // static const String user = "/api/v1/user";
   // static const String patientInformation = "/api/v1/user/patient-information";
   // static const String barangay = "/api/v1/barangays";

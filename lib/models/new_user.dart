@@ -51,7 +51,7 @@ class NewUser {
       //     .set({UserFields.uid: uid, ...getUserDetails()});
 
       await registerAccount(
-          barangay: "",
+          barangay: address,
           username: username,
           phoneNumber: phoneNumber,
           name: "$firstname $lastname",

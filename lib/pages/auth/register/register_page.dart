@@ -18,6 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController firstnameController = TextEditingController();
   final TextEditingController lastnameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
+  String selectedBarangay = "";
   // final TextEditingController usernameController = TextEditingController();
 
   DateTime? dateOfBirth;
@@ -45,7 +46,6 @@ class _RegisterPageState extends State<RegisterPage> {
     // }
   }
 
-  String selectedBarangay = "";
   void handleBarangaySelection(String? value) {
     setState(() {
       selectedBarangay = value ?? "";

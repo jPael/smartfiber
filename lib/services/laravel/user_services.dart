@@ -31,7 +31,7 @@ Future<void> registerAccount({
     RegistrationFields.password: password,
     // RegistrationFields.passwordConfirmation: password,
     RegistrationFields.phone: phoneNumber,
-    RegistrationFields.barangay: "example barangay",
+    RegistrationFields.barangay: barangay,
     RegistrationFields.username: username,
     // RegistrationFields.barangayId: "1",
     // RegistrationFields.userType: getIntegerFromUserTypeEnum(type),
@@ -131,3 +131,14 @@ Future<List<Recent>> fetchRecentByUserId(int id) async {
 
 //   // return jsonDecode(res.body) as Map<String, dynamic>;
 // }
+Future<List<String>> fetchAllBarangays() async {
+  final url = apiURIBase.replace(path: LaravelPaths.allBarangay);
+  final res = await http.get(url);
+
+  if (res.statusCode == 200) {
+    final List<dynamic> data = jsonDecode(res.body);
+    return data.map<String>((d) => (d as Map<String, dynamic>)['name'].toString()).toList();
+  } else {
+    throw Exception('Failed to load barangays');
+  }
+}
