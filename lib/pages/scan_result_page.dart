@@ -3,14 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smartfiber/components/button/custom_button.dart';
+import 'package:smartfiber/models/prediction.dart';
 import 'package:smartfiber/pages/home_layout_page.dart';
 import 'package:smartfiber/pages/smart_scan_page.dart';
 
 class ScanResultPage extends StatefulWidget {
-  const ScanResultPage({super.key, this.tag, this.imagePath});
+  const ScanResultPage({super.key, this.tag, this.imagePath, this.prediction});
 
   final File? imagePath;
   final String? tag;
+  final Prediction? prediction;
 
   @override
   State<ScanResultPage> createState() => _ScanResultPageState();
@@ -85,16 +87,16 @@ class _ScanResultPageState extends State<ScanResultPage> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  "${DateFormat("MMMM dd, yyyy").format(DateTime.now())} - ${DateFormat("HH:mm aa").format(DateTime.now())}",
+                  "${DateFormat("MMMM dd, yyyy").format(DateTime.now())} - ${DateFormat("HH:mm aa").format(widget.prediction!.date)}",
                 ),
                 const SizedBox(height: 16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
                     children: [
-                      _buildInfoRow("Grade:", "JK: (Hand Strip)"),
-                      _buildInfoRow("Local Name:", "Bakbak"),
-                      _buildInfoRow("Price:", "Php 45.00"),
+                      _buildInfoRow("Grade:", widget.prediction?.grade ?? "JK: (Hand Strip)"),
+                      _buildInfoRow("Local Name:", widget.prediction?.localName ?? "Bakbak"),
+                      _buildInfoRow("Price:", widget.prediction?.price ?? "Php 45.00"),
                     ],
                   ),
                 ),
@@ -106,13 +108,13 @@ class _ScanResultPageState extends State<ScanResultPage> {
                     alignment: WrapAlignment.center,
                     runSpacing: 8 * 3,
                     children: [
-                      CustomButton(
-                        isLoading: isUploading,
-                        onPress: handleUpload,
-                        label: "Upload to cloud storage",
-                        type: CustomButtonType.primary,
-                      ),
-                      const SizedBox(width: 8),
+                      // CustomButton(
+                      //   isLoading: isUploading,
+                      //   onPress: handleUpload,
+                      //   label: "Upload to cloud storage",
+                      //   type: CustomButtonType.primary,
+                      // ),
+                      // const SizedBox(width: 8),
                       CustomButton(
                         onPress: () => Navigator.pushReplacement(
                           context,

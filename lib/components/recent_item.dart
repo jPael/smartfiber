@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:smartfiber/pages/scan_result_page.dart';
+import 'package:intl/intl.dart';
+import 'package:smartfiber/models/recent.dart';
 
 class RecentItem extends StatelessWidget {
-  const RecentItem({super.key, required this.label, required this.createdAt, required this.index});
-
-  final String index;
-  final String label;
-  final String createdAt;
+  const RecentItem({
+    super.key,
+    required this.data,
+  });
+  final Recent data;
 
   @override
   Widget build(BuildContext context) {
-    final String heroTag = "hero-tag-$index";
+    final String heroTag = "hero-tag-${data.createdAt}";
 
     return GestureDetector(
-      onTap: () => _gotoDetailsPage(context, heroTag),
+      // onTap: () => _gotoDetailsPage(context, heroTag),
       child: Card(
         child: Row(
           children: [
@@ -33,12 +34,12 @@ class RecentItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    label,
+                    "${data.localName} | ${data.grade} ",
                     overflow: TextOverflow.fade,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 8 * 2.5),
                   ),
                   Text(
-                    createdAt,
+                    DateFormat("MMMM dd, yyyy").format(data.formattedDate),
                     style: TextStyle(fontSize: 8 * 1.5),
                   )
                 ],
@@ -50,11 +51,11 @@ class RecentItem extends StatelessWidget {
     );
   }
 
-  void _gotoDetailsPage(BuildContext context, String tag) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) => ScanResultPage(tag: tag),
-      ),
-    );
-  }
+  // void _gotoDetailsPage(BuildContext context, String tag) {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute<void>(
+  //       builder: (BuildContext context) => ScanResultPage(tag: tag),
+  //     ),
+  //   );
+  // }
 }

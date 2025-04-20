@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smartfiber/components/button/custom_button.dart';
+import 'package:smartfiber/pages/auth/login_page.dart';
 import 'package:smartfiber/pages/home_layout_page.dart';
 import 'package:smartfiber/pages/home_page.dart';
 
@@ -102,8 +103,8 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                         padding: const EdgeInsets.symmetric(horizontal: 8.0 * 4),
                         child: CustomButton(
                           type: CustomButtonType.secondary,
-                          onPress: () => Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => const HomeLayoutPage())),
+                          onPress: () => Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => LoginPage())),
                           label: "Let's Start",
                           labelStyle: TextStyle(
                               fontSize: 4 * 6, color: Colors.white, fontWeight: FontWeight.bold),

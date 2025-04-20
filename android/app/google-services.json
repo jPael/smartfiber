@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "769348006912",
+    "project_id": "smartfiber-dcd4b",
+    "storage_bucket": "smartfiber-dcd4b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769348006912:android:b4caa9e3a2c36a599b14e5",
+        "android_client_info": {
+          "package_name": "com.example.smartfiber"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF11eofLj22R20Tj2KdUCSiReyDa9lbJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

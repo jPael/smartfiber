@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconic/iconic.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
+import 'package:smartfiber/models/laravel_id.dart';
 import 'package:smartfiber/pages/accuracy_page.dart';
 import 'package:smartfiber/pages/activity_log_page.dart';
 import 'package:smartfiber/pages/home_page.dart';
@@ -84,62 +86,82 @@ class HomeLayoutPageState extends State<HomeLayoutPage> {
     return PopScope(
       canPop: navigationStack.length <= 1,
       onPopInvoked: _handlePop,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          title: Text(
-            titles[selectedView],
-            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 8 * 4),
+      child: Consumer<LaravelId>(builder: (context, laravel, child) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            automaticallyImplyLeading: false,
+            title: Text(
+              titles[selectedView],
+              style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 8 * 4),
+            ),
           ),
-        ),
-        extendBodyBehindAppBar: extendBehindAppbar,
-        // floatingActionButton: floatingButtons[selectedView],
-        body: PageView(
-          controller: _pageController,
-          physics: const NeverScrollableScrollPhysics(), // Disable swipe to change page
-          children: views,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: selectedView,
-          onTap: _onItemTapped,
-          selectedItemColor: Theme.of(context).colorScheme.secondary,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          selectedLabelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          unselectedLabelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          unselectedItemColor:
-              HSLColor.fromColor(Theme.of(context).colorScheme.primary).withSaturation(1).toColor(),
-          backgroundColor: Colors.white,
-          iconSize: 8 * 4,
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Ionicons.home_outline),
-              activeIcon: const Icon(Ionicons.home),
-              label: "Home",
-              backgroundColor: Colors.white,
+          extendBodyBehindAppBar: extendBehindAppbar,
+          // floatingActionButton: floatingButtons[selectedView],
+          body: Stack(children: [
+            PageView(
+              controller: _pageController,
+              physics: const NeverScrollableScrollPhysics(), // Disable swipe to change page
+              children: views,
             ),
-            BottomNavigationBarItem(
-              icon: const Icon(Iconic.target),
-              activeIcon: const Icon(Iconic.target_bold),
-              label: "Accuracy",
-              backgroundColor: Colors.white,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Ionicons.git_branch_outline),
-              activeIcon: const Icon(Ionicons.git_branch),
-              label: "Model Flow",
-              backgroundColor: Colors.white,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Ionicons.analytics_outline),
-              activeIcon: const Icon(Ionicons.analytics),
-              label: "Activty Log",
-              backgroundColor: Colors.white,
-            ),
-          ],
-        ),
-      ),
+            if (laravel.isLoading)
+              AbsorbPointer(
+                absorbing: true,
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.white.withValues(alpha: 0.6),
+                  child: Center(
+                    child: SizedBox.square(
+                      dimension: 8 * 4,
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ),
+              )
+          ]),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: selectedView,
+            onTap: _onItemTapped,
+            selectedItemColor: Theme.of(context).colorScheme.secondary,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            selectedLabelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            unselectedLabelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            unselectedItemColor: HSLColor.fromColor(Theme.of(context).colorScheme.primary)
+                .withSaturation(1)
+                .toColor(),
+            backgroundColor: Colors.white,
+            iconSize: 8 * 4,
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Ionicons.home_outline),
+                activeIcon: const Icon(Ionicons.home),
+                label: "Home",
+                backgroundColor: Colors.white,
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Iconic.target),
+                activeIcon: const Icon(Iconic.target_bold),
+                label: "Accuracy",
+                backgroundColor: Colors.white,
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Ionicons.git_branch_outline),
+                activeIcon: const Icon(Ionicons.git_branch),
+                label: "Model Flow",
+                backgroundColor: Colors.white,
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Ionicons.analytics_outline),
+                activeIcon: const Icon(Ionicons.analytics),
+                label: "Activty Log",
+                backgroundColor: Colors.white,
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

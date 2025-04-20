@@ -6,8 +6,11 @@ import 'package:custom_ratio_camera/custom_ratio_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smartfiber/components/camera/camera_scanning_animation_overlay.dart';
+import 'package:smartfiber/models/laravel_id.dart';
+import 'package:smartfiber/models/prediction.dart';
 import 'package:smartfiber/pages/scan_result_page.dart';
 import 'package:smartfiber/provider/camera_provider.dart';
+import 'package:smartfiber/services/laravel/ai_service.dart';
 
 class SmartScanPage extends StatefulWidget {
   const SmartScanPage({super.key});
@@ -33,6 +36,10 @@ class _SmartScanPageState extends State<SmartScanPage> {
 
     final String _imagePath = await cameraProvider.takePicture();
 
+// final int randomSeconds = math.Random().nextInt(10);
+
+    // await Future.delayed(Duration(seconds:randomSeconds ));
+
     setState(() {
       imageFile = File(_imagePath);
 
@@ -45,11 +52,20 @@ class _SmartScanPageState extends State<SmartScanPage> {
     log(randomSeconds.toString());
     await Future.delayed(Duration(seconds: randomSeconds));
 
+    final LaravelId laravelId = context.read<LaravelId>();
+
+    final Prediction prediction = await getImagePrediction(laravelId.id!);
+
     cameraProvider.dispose();
 
     if (mounted) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => ScanResultPage(imagePath: imageFile)));
+          context,
+          MaterialPageRoute(
+              builder: (_) => ScanResultPage(
+                    imagePath: imageFile,
+                    prediction: prediction,
+                  )));
     }
   }
 
