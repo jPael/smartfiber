@@ -78,10 +78,10 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Flexible(
+                    Flexible(
                         child: Text(
                       "Let's make you an account",
                       style: TextStyle(fontSize: 8 * 6, fontWeight: FontWeight.w500),

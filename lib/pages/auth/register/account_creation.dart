@@ -64,7 +64,7 @@ class AccountCreationState extends State<AccountCreation> {
 
       if (result["error"] != null) {
         if (mounted) {
-          showErrorMessage(context: context, message: errorMessage(result["error"]!));
+          Alert.showErrorMessage(message: errorMessage(result["error"]!));
         }
 
         setState(() {
@@ -74,7 +74,7 @@ class AccountCreationState extends State<AccountCreation> {
       }
 
       if (!mounted) return;
-      showSuccessMessage(context: context, message: errorMessage(result["success"]!));
+      Alert.showSuccessMessage(message: errorMessage(result["success"]!));
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const AuthPage()),
@@ -121,10 +121,10 @@ class AccountCreationState extends State<AccountCreation> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Flexible(
+                    Flexible(
                         child: Text(
                       "Create your account",
                       style: TextStyle(fontSize: 8 * 6, fontWeight: FontWeight.w500),
@@ -166,21 +166,21 @@ class AccountCreationState extends State<AccountCreation> {
                     //   height: 8 * 2,
                     // ),
                     CustomInput.text(
-                        context: context,
-                        // validator: (v) {
-                        //   if (v == null || v.isEmpty) {
-                        //     return "Please enter your email";
-                        //   }
-                        //   final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-                        //   if (!emailRegex.hasMatch(v)) {
-                        //     return "Please enter a valid email address";
-                        //   }
-                        //   return null;
-                        // },
-                        controller: usernameController,
-                        startIcon: const Icon(Icons.email_outlined),
-                        label: "Username",
-                        hint: "e.g. example@email.com"),
+                      context: context,
+                      // validator: (v) {
+                      //   if (v == null || v.isEmpty) {
+                      //     return "Please enter your email";
+                      //   }
+                      //   final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                      //   if (!emailRegex.hasMatch(v)) {
+                      //     return "Please enter a valid email address";
+                      //   }
+                      //   return null;
+                      // },
+                      controller: usernameController,
+                      startIcon: const Icon(Icons.email_outlined),
+                      label: "Username",
+                    ),
                     const SizedBox(
                       height: 8 * 2,
                     ),

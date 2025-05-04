@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smartfiber/components/button/custom_button.dart';
 import 'package:smartfiber/pages/auth/login_page.dart';
-import 'package:smartfiber/pages/home_layout_page.dart';
-import 'package:smartfiber/pages/home_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -27,7 +25,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
 
     final curve = CurvedAnimation(
       parent: _controller,
-      curve: Cubic(0.39, 0.57, 0.56, 1), // Choose any curve you like
+      curve: const Cubic(0.39, 0.57, 0.56, 1), // Choose any curve you like
     );
 
     _opacityAnimation = Tween<double>(
@@ -52,7 +50,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         forceMaterialTransparency: true,
-        systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
         backgroundColor: Colors.transparent,
       ),
       body: Container(
@@ -104,16 +102,16 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                         child: CustomButton(
                           type: CustomButtonType.secondary,
                           onPress: () => Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => LoginPage())),
+                              context, MaterialPageRoute(builder: (context) => const LoginPage())),
                           label: "Let's Start",
-                          labelStyle: TextStyle(
+                          labelStyle: const TextStyle(
                               fontSize: 4 * 6, color: Colors.white, fontWeight: FontWeight.bold),
                           customButtonStyle: ButtonStyle(
                             iconColor: WidgetStateProperty.all(Colors.white),
                             shape: WidgetStateProperty.all(
                                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
                             padding: WidgetStateProperty.all(
-                                EdgeInsets.symmetric(horizontal: 8.0 * 4, vertical: 8.0 * 2)),
+                                const EdgeInsets.symmetric(horizontal: 8.0 * 4, vertical: 8.0 * 2)),
                           ),
                         ),
                       ),

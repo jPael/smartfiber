@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smartfiber/models/barangay.dart';
 import 'package:smartfiber/services/laravel/user_services.dart';
 // import 'package:smartfiber/services/laravel/barangay_services.dart';
 
@@ -26,12 +25,12 @@ class BarangaySelectorState extends State<BarangaySelector> {
     });
 
     // await Future.delayed(Duration(seconds: 3));
-    final _barangays = await fetchAllBarangays();
+    final fetchedBarangays = await fetchAllBarangays();
 
     setState(() {
-      defaultValue = _barangays.first;
+      defaultValue = fetchedBarangays.first;
       widget.onChange(defaultValue);
-      barangays = _barangays;
+      barangays = fetchedBarangays;
     });
 
     setState(() {

@@ -3,7 +3,7 @@ import 'package:smartfiber/utils/utils.dart';
 
 enum SocialButtonType { google }
 
-enum CustomButtonType { primary, secondary, destuctive }
+enum CustomButtonType { primary, secondary, destuctive, ghost }
 
 extension CustomButtonTypeExtension on CustomButtonType {
   Color color(BuildContext context) {
@@ -15,6 +15,22 @@ extension CustomButtonTypeExtension on CustomButtonType {
 
       case CustomButtonType.destuctive:
         return Theme.of(context).colorScheme.error;
+      case CustomButtonType.ghost:
+        return Colors.white;
+    }
+  }
+
+  Color fontColor(BuildContext context) {
+    switch (this) {
+      case CustomButtonType.primary:
+        return Colors.white;
+      case CustomButtonType.secondary:
+        return Colors.white;
+
+      case CustomButtonType.destuctive:
+        return Colors.white;
+      case CustomButtonType.ghost:
+        return Colors.black;
     }
   }
 }
@@ -55,7 +71,7 @@ class CustomButton extends StatelessWidget {
         : Theme.of(context).colorScheme.primary.withValues(alpha: isLoading ? 0.5 : 1.0);
 
     final TextStyle defaultLabelStyle =
-        labelStyle ?? TextStyle(color: Colors.white, fontSize: 8 * 2);
+        labelStyle ?? TextStyle(color: type!.fontColor(context), fontSize: 8 * 2);
 
     final ButtonStyle defaultButtonStyle = customButtonStyle != null
         ? customButtonStyle!.copyWith(backgroundColor: WidgetStateProperty.all(defaultColor))
@@ -68,8 +84,15 @@ class CustomButton extends StatelessWidget {
                 horizontal: 8.0 * horizontalPadding, vertical: 8.0 * verticalPadding)),
             backgroundColor: WidgetStateProperty.all(defaultColor));
 
+    final Icon? defaultIcon = icon != null
+        ? Icon(
+            icon?.icon,
+            color: type!.fontColor(context),
+          )
+        : null;
+
     return ElevatedButton.icon(
-        icon: isLoading ? loadingIndicator() : icon,
+        icon: isLoading ? loadingIndicator(context) : defaultIcon,
         style: defaultButtonStyle,
         onPressed: onPress,
         label: Text(
@@ -78,13 +101,13 @@ class CustomButton extends StatelessWidget {
         ));
   }
 
-  Widget loadingIndicator() {
-    return const SizedBox(
+  Widget loadingIndicator(BuildContext context) {
+    return SizedBox(
       height: 8 * 2,
       width: 8 * 2,
       child: CircularProgressIndicator(
         strokeWidth: 2,
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        valueColor: AlwaysStoppedAnimation<Color>(type!.fontColor(context)),
       ),
     );
   }

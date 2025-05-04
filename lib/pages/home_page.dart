@@ -7,34 +7,25 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
+    return const Scaffold(
+      // backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0 * 2, vertical: 8 * 2),
+        padding: EdgeInsets.symmetric(horizontal: 8.0 * 2, vertical: 8 * 2),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Toolbar(),
-            const SizedBox(
+            SizedBox(
               height: 8 * 4,
             ),
             Expanded(
                 child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Recents(),
             ))
           ],
         ),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: FloatingActionButton.large(
-      //   onPressed: () {},
-      //   child: Icon(
-      //     Icons.camera_rounded,
-      //     color: Colors.white,
-      //     size: 50,
-      //   ),
-      // ),
     );
   }
 }

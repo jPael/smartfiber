@@ -51,7 +51,7 @@ class ToolbarButton extends StatelessWidget {
           ),
           Text(
             label,
-            style: TextStyle(fontSize: 8 * 2, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 8 * 2, fontWeight: FontWeight.w600),
           )
         ],
       ),

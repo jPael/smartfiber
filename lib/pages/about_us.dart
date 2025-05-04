@@ -10,7 +10,7 @@ class AboutUs extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "About Us",
           style: TextStyle(fontSize: 4 * 8, fontWeight: FontWeight.bold),
         ),
@@ -22,7 +22,7 @@ class AboutUs extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            const Row(
               children: [
                 Flexible(
                     child: Text(
@@ -34,14 +34,14 @@ class AboutUs extends StatelessWidget {
             const SizedBox(
               height: 8.0 * paragraphSpacing,
             ),
-            Text(
+            const Text(
               "Our Mission",
               style: TextStyle(fontSize: 4 * 8, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 8.0 * titleSubtitleSpacing,
             ),
-            Row(
+            const Row(
               children: [
                 Flexible(
                     child: Text(
@@ -53,14 +53,14 @@ class AboutUs extends StatelessWidget {
             const SizedBox(
               height: 8.0 * paragraphSpacing,
             ),
-            Text(
+            const Text(
               "What We Do",
               style: TextStyle(fontSize: 4 * 8, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 8.0 * titleSubtitleSpacing,
             ),
-            Row(
+            const Row(
               children: [
                 Flexible(
                     child: Text(
@@ -72,7 +72,7 @@ class AboutUs extends StatelessWidget {
             const SizedBox(
               height: 8.0 * paragraphSpacing,
             ),
-            Text(
+            const Text(
               "Why Choose Smart Fiber?",
               style: TextStyle(fontSize: 4 * 8, fontWeight: FontWeight.bold),
             ),
@@ -80,9 +80,9 @@ class AboutUs extends StatelessWidget {
               height: 8.0 * titleSubtitleSpacing,
             ),
             RichText(
-              text: TextSpan(
+              text: const TextSpan(
                 style: TextStyle(color: Colors.black, fontSize: 4 * 4),
-                children: const <TextSpan>[
+                children: <TextSpan>[
                   TextSpan(
                     text: '1. Efficiency: ',
                     style: TextStyle(
@@ -129,14 +129,14 @@ class AboutUs extends StatelessWidget {
             const SizedBox(
               height: 8.0 * paragraphSpacing,
             ),
-            Text(
+            const Text(
               "Our Vision",
               style: TextStyle(fontSize: 4 * 8, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 8.0 * titleSubtitleSpacing,
             ),
-            Row(
+            const Row(
               children: [
                 Flexible(
                     child: Text(
@@ -148,7 +148,7 @@ class AboutUs extends StatelessWidget {
             const SizedBox(
               height: 8.0 * paragraphSpacing,
             ),
-            Row(
+            const Row(
               children: [
                 Flexible(
                     child: Text(

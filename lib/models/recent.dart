@@ -12,8 +12,10 @@ class Recent {
   final String price;
   final String createdAt;
   final DateTime formattedDate;
+  final String? path;
 
   Recent({
+    this.path,
     required this.grade,
     required this.localName,
     required this.price,
@@ -22,6 +24,7 @@ class Recent {
   });
 
   static Recent fromJson(Map<String, dynamic> json) => Recent(
+      path: json['image_path'],
       createdAt: json['created_at'],
       grade: json['grade'],
       formattedDate: DateTime.parse(json['created_at']),

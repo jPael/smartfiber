@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smartfiber/components/alert/alert.dart';
 import 'package:smartfiber/components/button/custom_button.dart';
 import 'package:smartfiber/components/form/custom_form.dart';
 import 'package:smartfiber/components/input/custom_input.dart';
 import 'package:smartfiber/models/laravel_id.dart';
 import 'package:smartfiber/pages/auth/register/register_page.dart';
 import 'package:smartfiber/pages/home_layout_page.dart';
-import 'package:smartfiber/pages/home_page.dart';
 import 'package:smartfiber/services/laravel/user_services.dart';
 
 class LoginPage extends StatefulWidget {
@@ -38,16 +38,19 @@ class _LoginPageState extends State<LoginPage> {
       final int? result =
           await loginAccount(username: usernameController.text, password: passwordController.text);
 
-      if (!mounted) return;
-
       if (result != null) {
         final laravelId = context.read<LaravelId>();
         laravelId.setId(result);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomeLayoutPage()));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeLayoutPage()),
+          (route) => false,
+        );
       } else {
-        // Handle login failure (show error message, etc.)
+        Alert.showErrorMessage(message: "Username or password is incorrect");
       }
+    } catch (e) {
+      Alert.showErrorMessage(message: "Username or password is incorrect");
     } finally {
       if (mounted) {
         setState(() {
@@ -144,12 +147,12 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 8 * 2,
                 ),
-                Text("Don't have an account?"),
+                const Text("Don't have an account?"),
                 CustomButton.ghost(
                     context: context,
                     label: "Register",
                     onPressed: () => Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => RegisterPage()))),
+                        context, MaterialPageRoute(builder: (context) => const RegisterPage()))),
                 // CustomButton.social(
                 //   context: context,
                 //   label: "Sign in with Google",

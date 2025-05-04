@@ -1,37 +1,47 @@
 import 'package:flutter/material.dart';
 
-ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showErrorMessage(
-    {required BuildContext context,
-    required String message,
-    Duration duration = const Duration(seconds: 10)}) {
-  return ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(
-        message,
-        style: const TextStyle(fontWeight: FontWeight.w500),
-      ),
-      duration: duration,
-      action: SnackBarAction(
-          label: "Close", onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar()),
-      backgroundColor: Colors.red,
-    ),
-  );
-}
+class Alert {
+  // Global key for scaffold messenger
+  static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
 
-ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSuccessMessage(
-    {required BuildContext context,
+  static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showErrorMessage({
     required String message,
-    Duration duration = const Duration(seconds: 5)}) {
-  return ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(
-        message,
-        style: const TextStyle(fontWeight: FontWeight.w500),
+    Duration duration = const Duration(seconds: 10),
+  }) {
+    return scaffoldMessengerKey.currentState!.showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
+        duration: duration,
+        action: SnackBarAction(
+          label: "Close",
+          onPressed: () => scaffoldMessengerKey.currentState!.hideCurrentSnackBar(),
+        ),
+        backgroundColor: Colors.red,
       ),
-      duration: duration,
-      action: SnackBarAction(
-          label: "Close", onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar()),
-      backgroundColor: Colors.green,
-    ),
-  );
+    );
+  }
+
+  static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSuccessMessage({
+    required String message,
+    Duration duration = const Duration(seconds: 5),
+  }) {
+    return scaffoldMessengerKey.currentState!.showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
+        duration: duration,
+        action: SnackBarAction(
+          label: "Close",
+          onPressed: () => scaffoldMessengerKey.currentState!.hideCurrentSnackBar(),
+        ),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
 }

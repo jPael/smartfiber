@@ -1,4 +1,20 @@
-Uri get apiURIBase => Uri(scheme: "http", host: "192.168.92.34", port: 8000);
+// Uri get apiURIBase => Uri(scheme: "http", host: "192.168.254.103", port: 8000);
+import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+Uri get apiURIBase {
+  if (kReleaseMode) {
+    return Uri(
+      scheme: "https",
+      host: dotenv.env['REMOTE_BACKEND_API'],
+    );
+  } else {
+    return Uri(
+        scheme: "http",
+        host: dotenv.env['LOCAL_BACKEND_API'],
+        port: int.parse(dotenv.env['LOCAL_BACKEND_PORT'] ?? "8000"));
+  }
+}
 
 class LaravelPaths {
   static const String register = "/api/register";
@@ -16,4 +32,6 @@ class LaravelPaths {
   // static const String allReminders = "/api/v1/reminders";
 
   static String recentsById(int i) => "/api/recents/$i";
+
+  static String imageUrl(String url) => apiURIBase.replace(path: "storage/$url").toString();
 }

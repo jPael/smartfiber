@@ -22,14 +22,21 @@ class Toolbar extends StatefulWidget {
 
 class _ToolbarState extends State<Toolbar> {
   final GalleryImagePickerService _galleryService = GalleryImagePickerService();
-  File? _selectedImage;
-  List<File> _selectedImages = [];
-  bool _isLoading = false;
+  // File? _selectedImage;
+  // final List<File> _selectedImages = [];
+  // bool _isLoading = false;
 
   Future<void> _pickSingleImage() async {
-    setState(() => _isLoading = true);
+    // setState(() => _isLoading = true);
     final int randomSeconds = Random().nextInt(10);
+
+    if (!(await FilePermissionsHelper.hasPhotoLibraryAccess)) {
+      _showPermissionWarningIfNeeded();
+    }
+
     final File? image = await _galleryService.pickSingleImage();
+
+    if (image == null) return;
 
     final LaravelId laravel = context.read<LaravelId>();
 
@@ -37,7 +44,11 @@ class _ToolbarState extends State<Toolbar> {
 
     await Future.delayed(Duration(seconds: randomSeconds));
 
-    final Prediction prediction = await getImagePrediction(laravel.id!);
+    final Prediction? prediction = await getImagePrediction(userId: laravel.id!, imageFile: image);
+
+    if (prediction == null) {
+      return;
+    }
 
     if (mounted) {
       laravel.setIsLoading(false);
@@ -46,13 +57,9 @@ class _ToolbarState extends State<Toolbar> {
           context,
           MaterialPageRoute(
               builder: (context) => ScanResultPage(
-                    imagePath: image!,
+                    imagePath: image,
                     prediction: prediction,
                   )));
-    }
-
-    if (image == null) {
-      _showPermissionWarningIfNeeded();
     }
   }
 
@@ -64,15 +71,15 @@ class _ToolbarState extends State<Toolbar> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Permission Required'),
-          content: Text('Please enable photo library access in settings to select images'),
+          title: const Text('Permission Required'),
+          content: const Text('Please enable photo library access in settings to select images'),
           actions: [
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () => Navigator.pop(context),
             ),
             TextButton(
-              child: Text('Open Settings'),
+              child: const Text('Open Settings'),
               onPressed: () {
                 Navigator.pop(context);
                 FilePermissionsHelper.openAppSettings();
@@ -92,8 +99,8 @@ class _ToolbarState extends State<Toolbar> {
         ToolbarButton(
           label: "Smart Scan",
           icon: Icons.camera_rounded,
-          ontap: () =>
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SmartScanPage())),
+          ontap: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const SmartScanPage())),
         ),
         ToolbarButton(
           label: "Import Image",
@@ -103,7 +110,8 @@ class _ToolbarState extends State<Toolbar> {
         ToolbarButton(
           label: "About us",
           icon: Icons.info,
-          ontap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUs())),
+          ontap: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutUs())),
         ),
         // ToolbarButton(
         //   label: "Model info",

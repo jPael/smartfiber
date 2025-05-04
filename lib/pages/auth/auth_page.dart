@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +28,10 @@ class _AuthPageState extends State<AuthPage> {
         }
 
         if (!snapshot.hasData) {
-          return LoginPage();
+          return const LoginPage();
         }
 
-        return LoginPage();
+        return const LoginPage();
 
         // return FutureBuilder<Map<String, dynamic>?>(
         //   future: getUserByUID(user.uid),

@@ -43,7 +43,7 @@ class _CameraScanningAnimationOverlayState extends State<CameraScanningAnimation
           ),
         ),
         Align(alignment: Alignment.center, child: scanLines()),
-        Align(
+        const Align(
             alignment: Alignment.center,
             child: Text(
               "Analyzing, please wait...",
@@ -75,7 +75,7 @@ class _CameraScanningAnimationOverlayState extends State<CameraScanningAnimation
                         .toColor(),
                     blurRadius: 20,
                     spreadRadius: 1,
-                    offset: Offset(0, 0),
+                    offset: const Offset(0, 0),
                   ),
                   BoxShadow(
                     color: HSLColor.fromColor(Theme.of(context).colorScheme.primary)
@@ -84,7 +84,7 @@ class _CameraScanningAnimationOverlayState extends State<CameraScanningAnimation
                         .toColor(),
                     blurRadius: 40,
                     spreadRadius: 5,
-                    offset: Offset(0, 0),
+                    offset: const Offset(0, 0),
                   ),
                   BoxShadow(
                     color: HSLColor.fromColor(Theme.of(context).colorScheme.primary)
@@ -93,7 +93,7 @@ class _CameraScanningAnimationOverlayState extends State<CameraScanningAnimation
                         .toColor(),
                     blurRadius: 60,
                     spreadRadius: 10,
-                    offset: Offset(0, 0),
+                    offset: const Offset(0, 0),
                   ),
                 ],
               ),

@@ -42,7 +42,9 @@ class CameraProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  @override
   Future<void> dispose() async {
+    super.dispose();
     await _cameraService.dispose();
   }
 }

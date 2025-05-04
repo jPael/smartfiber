@@ -1,0 +1,2 @@
+C:/Users/Me/Desktop/smartfiber/android/app/.cxx/RelWithDebInfo/35g2iw6m/x86/CMakeFiles/edit_cache.dir
+C:/Users/Me/Desktop/smartfiber/android/app/.cxx/RelWithDebInfo/35g2iw6m/x86/CMakeFiles/rebuild_cache.dir

@@ -4,17 +4,12 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:smartfiber/error/app_error.dart';
-import 'package:smartfiber/fields/user_fields.dart';
 import 'package:smartfiber/models/new_user.dart';
 import 'package:smartfiber/models/recent.dart';
 import 'package:smartfiber/services/laravel/api_url_base.dart';
 import 'package:smartfiber/services/laravel/fields.dart';
-import 'package:smartfiber/utils/const_utils.dart';
 // import 'package:smartfiber/services/laravel/api_url.dart';
 // import 'package:smartfiber/services/laravel/fields.dart';
-import 'package:smartfiber/utils/utils.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 Future<void> registerAccount({
   required String name,
@@ -72,8 +67,6 @@ Future<int?> loginAccount({required String username, required String password}) 
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({"username": username, "password": password}));
 
-    log({"username": username, "password": password}.toString());
-    log(res.body.toString());
     final data = jsonDecode(res.body);
 
     if (data["error"] != null) {
@@ -84,8 +77,8 @@ Future<int?> loginAccount({required String username, required String password}) 
 
     return data["data"]["user"]["id"];
   } catch (e, stackTrace) {
-    log("There was an error: e", stackTrace: stackTrace);
-    return null;
+    log("There was an error: $e", stackTrace: stackTrace);
+    rethrow;
   }
   // return {
   //   // UserFields.token: data["data"]["token"],
@@ -105,9 +98,9 @@ Future<void> logoutAccount({required String token}) async {
 Future<List<Recent>> fetchRecentByUserId(int id) async {
   final url = apiURIBase.replace(path: LaravelPaths.recentsById(id));
 
-  final res = await http.get(url);
+  // log(url.toString());
 
-  log(res.body);
+  final res = await http.get(url);
 
   final List<dynamic> data = jsonDecode(res.body);
 

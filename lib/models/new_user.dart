@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:smartfiber/fields/user_fields.dart';
 import 'package:smartfiber/services/laravel/user_services.dart';
 import 'package:smartfiber/utils/const_utils.dart';
-import 'package:smartfiber/utils/utils.dart';
 
 class NewUser {
   final UserType type;

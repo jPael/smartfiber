@@ -24,27 +24,20 @@ class _SmartScanPageState extends State<SmartScanPage> {
   bool loadingImage = false;
   String? imagePath;
   File? imageFile;
+  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey = GlobalKey();
+  late final CameraProvider _cameraProvider; // Store provider reference
 
   Future<void> takePicture() async {
     int randomSeconds = math.Random().nextInt(10);
-
-    final cameraProvider = Provider.of<CameraProvider>(context, listen: false);
 
     setState(() {
       loadingImage = true;
     });
 
-    final String _imagePath = await cameraProvider.takePicture();
-
-// final int randomSeconds = math.Random().nextInt(10);
-
-    // await Future.delayed(Duration(seconds:randomSeconds ));
+    final String imagePath = await _cameraProvider.takePicture();
 
     setState(() {
-      imageFile = File(_imagePath);
-
-      imagePath = _imagePath;
-
+      imageFile = File(imagePath);
       tookAPicture = true;
       loadingImage = false;
     });
@@ -53,60 +46,77 @@ class _SmartScanPageState extends State<SmartScanPage> {
     await Future.delayed(Duration(seconds: randomSeconds));
 
     final LaravelId laravelId = context.read<LaravelId>();
+    final Prediction? prediction =
+        await getImagePrediction(userId: laravelId.id!, imageFile: imageFile!);
 
-    final Prediction prediction = await getImagePrediction(laravelId.id!);
-
-    cameraProvider.dispose();
+    if (prediction == null) {
+      _scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
+          backgroundColor:
+              HSLColor.fromColor(Theme.of(context).colorScheme.primary).withSaturation(1).toColor(),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).size.height - 150, // Positions near top
+          ),
+          content: const Text("File is missing. Please try again")));
+      return;
+    }
 
     if (mounted) {
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (_) => ScanResultPage(
-                    imagePath: imageFile,
-                    prediction: prediction,
-                  )));
+        context,
+        MaterialPageRoute(
+          builder: (_) => ScanResultPage(
+            imagePath: imageFile,
+            prediction: prediction,
+          ),
+        ),
+      );
     }
   }
 
   @override
   void initState() {
     super.initState();
+    _cameraProvider = context.read<CameraProvider>(); // Initialize here
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final cameraProvider = context.read<CameraProvider>();
-      await cameraProvider.ensureInitialized();
+      await _cameraProvider.ensureInitialized();
       if (mounted) setState(() {});
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    final cameraProvider = Provider.of<CameraProvider>(context);
+  void dispose() {
+    _cameraProvider.dispose(); // Use stored reference
+    super.dispose();
+  }
 
-    if (cameraProvider.error != null) {
+  @override
+  Widget build(BuildContext context) {
+    if (_cameraProvider.error != null) {
       return Scaffold(
         body: Center(
-          child: Text("Error: ${cameraProvider.error}"),
+          child: Text("Error: ${_cameraProvider.error}"),
         ),
       );
     }
 
-    log((cameraProvider.controller == null).toString());
+    log((_cameraProvider.controller == null).toString());
 
-    if (cameraProvider.isLoading || cameraProvider.controller == null) {
-      return Scaffold(
+    if (_cameraProvider.isLoading || _cameraProvider.controller == null) {
+      return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Smart Scan"),
+        title: const Text("Smart Scan"),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.large(
         onPressed: takePicture,
-        child: Column(
+        child: const Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -124,9 +134,9 @@ class _SmartScanPageState extends State<SmartScanPage> {
                   child: AspectRatio(
                     aspectRatio: 1.0,
                     child: loadingImage
-                        ? SizedBox(
-                            height: 8 * 4,
-                            width: 8 * 4,
+                        ? const SizedBox(
+                            height: 32,
+                            width: 32,
                             child: CircularProgressIndicator(),
                           )
                         : Hero(
@@ -134,32 +144,36 @@ class _SmartScanPageState extends State<SmartScanPage> {
                             child: Image.file(
                               imageFile!,
                               fit: BoxFit.cover,
-                            )),
+                            ),
+                          ),
                   ),
                 )
               : CustomRatioCameraPreview(
-                  cameraController: cameraProvider.controller!,
-                  expectedRatio: 1.0, // 1:1 aspect ratio
+                  cameraController: _cameraProvider.controller!,
+                  expectedRatio: 1.0,
                 ),
           Align(
             alignment: Alignment.topLeft,
             child: Card(
               color: Theme.of(context).colorScheme.secondary,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   "BETA",
                   style: TextStyle(
-                      fontSize: 8 * 2,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic),
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
             ),
           ),
-          tookAPicture ? CameraScanningAnimationOverlay() : SizedBox()
+          tookAPicture ? const CameraScanningAnimationOverlay() : const SizedBox(),
         ],
       ),
     );

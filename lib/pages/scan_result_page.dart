@@ -41,7 +41,7 @@ class _ScanResultPageState extends State<ScanResultPage> {
             margin: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height - 150, // Positions near top
             ),
-            content: Text("File has been uploaded")),
+            content: const Text("File has been uploaded")),
       );
     } catch (e) {
       debugPrint('Upload error: $e');
@@ -107,6 +107,7 @@ class _ScanResultPageState extends State<ScanResultPage> {
                     // mainAxisAlignment: MainAxisAlignment.center,
                     alignment: WrapAlignment.center,
                     runSpacing: 8 * 3,
+                    spacing: 8 * 3,
                     children: [
                       // CustomButton(
                       //   isLoading: isUploading,
@@ -116,18 +117,17 @@ class _ScanResultPageState extends State<ScanResultPage> {
                       // ),
                       // const SizedBox(width: 8),
                       CustomButton(
+                        type: CustomButtonType.ghost,
                         onPress: () => Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (_) => const SmartScanPage()),
                         ),
                         label: "Retry",
-                        type: CustomButtonType.secondary,
                       ),
-                      CustomButton.ghost(
-                        context: context,
-                        onPressed: () => Navigator.pushReplacement(
+                      CustomButton(
+                        onPress: () => Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (_) => HomeLayoutPage()),
+                          MaterialPageRoute(builder: (_) => const HomeLayoutPage()),
                         ),
                         label: "Done",
                         // type: CustomButtonType.secondary,

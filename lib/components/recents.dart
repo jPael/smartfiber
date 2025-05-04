@@ -38,23 +38,27 @@ class _RecentsState extends State<Recents> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "Recents",
           style: TextStyle(fontSize: 8 * 3, fontWeight: FontWeight.w600),
         ),
         Expanded(
           child: isLoading
-              ? Center(
+              ? const Center(
                   child: SizedBox.square(
                     dimension: 8 * 4,
                     child: CircularProgressIndicator(),
                   ),
                 )
-              : ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) => RecentItem(
-                        data: data[index],
-                      )),
+              : data.isEmpty
+                  ? const Center(
+                      child: Text("No recents"),
+                    )
+                  : ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, index) => RecentItem(
+                            data: data[index],
+                          )),
         )
       ],
     );

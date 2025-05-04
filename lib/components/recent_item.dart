@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smartfiber/models/recent.dart';
+import 'package:smartfiber/services/laravel/api_url_base.dart';
 
 class RecentItem extends StatelessWidget {
   const RecentItem({
@@ -20,7 +21,20 @@ class RecentItem extends StatelessWidget {
           children: [
             Hero(
               tag: heroTag,
-              child: Icon(
+              child: data.path != null
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                          height: 8 * 8,
+                          width: 8 * 8,
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                          clipBehavior: Clip.antiAlias,
+                          child: Image.network(
+                            LaravelPaths.imageUrl(data.path!),
+                            fit: BoxFit.cover,
+                          )),
+                    )
+                  : const Icon(
                 Icons.image,
                 size: 8 * 10,
               ),
@@ -36,11 +50,11 @@ class RecentItem extends StatelessWidget {
                   Text(
                     "${data.localName} | ${data.grade} ",
                     overflow: TextOverflow.fade,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 8 * 2.5),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 8 * 2.5),
                   ),
                   Text(
                     DateFormat("MMMM dd, yyyy").format(data.formattedDate),
-                    style: TextStyle(fontSize: 8 * 1.5),
+                    style: const TextStyle(fontSize: 8 * 1.5),
                   )
                 ],
               ),
