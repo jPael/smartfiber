@@ -5,6 +5,8 @@ import 'dart:math' as math;
 import 'package:custom_ratio_camera/custom_ratio_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smartfiber/components/alert/alert.dart';
+import 'package:smartfiber/components/button/custom_button.dart';
 import 'package:smartfiber/components/camera/camera_scanning_animation_overlay.dart';
 import 'package:smartfiber/models/laravel_id.dart';
 import 'package:smartfiber/models/prediction.dart';
@@ -27,9 +29,11 @@ class _SmartScanPageState extends State<SmartScanPage> {
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey = GlobalKey();
   late final CameraProvider _cameraProvider; // Store provider reference
 
-  Future<void> takePicture() async {
-    int randomSeconds = math.Random().nextInt(10);
+  void showErrorALert() {
+    Alert.showErrorMessage(message: "Can't predict image");
+  }
 
+  Future<void> takePicture() async {
     setState(() {
       loadingImage = true;
     });
@@ -42,22 +46,18 @@ class _SmartScanPageState extends State<SmartScanPage> {
       loadingImage = false;
     });
 
-    log(randomSeconds.toString());
-    await Future.delayed(Duration(seconds: randomSeconds));
-
     final LaravelId laravelId = context.read<LaravelId>();
     final Prediction? prediction =
         await getImagePrediction(userId: laravelId.id!, imageFile: imageFile!);
 
     if (prediction == null) {
-      _scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
-          backgroundColor:
-              HSLColor.fromColor(Theme.of(context).colorScheme.primary).withSaturation(1).toColor(),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height - 150, // Positions near top
-          ),
-          content: const Text("File is missing. Please try again")));
+      showErrorALert();
+
+      setState(() {
+        tookAPicture = false;
+      });
+
+      Navigator.pop(context);
       return;
     }
 
@@ -87,7 +87,7 @@ class _SmartScanPageState extends State<SmartScanPage> {
 
   @override
   void dispose() {
-    _cameraProvider.dispose(); // Use stored reference
+    // _cameraProvider.(); // Use stored reference
     super.dispose();
   }
 

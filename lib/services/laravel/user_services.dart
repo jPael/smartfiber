@@ -36,6 +36,8 @@ Future<void> registerAccount({
 
   final url = apiURIBase.replace(path: LaravelPaths.register);
 
+  log(url.toString());
+
   final res = await http.post(
     url,
     headers: {

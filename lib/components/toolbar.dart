@@ -8,6 +8,7 @@ import 'package:smartfiber/helper/file_permissions_helper.dart';
 import 'package:smartfiber/models/laravel_id.dart';
 import 'package:smartfiber/models/prediction.dart';
 import 'package:smartfiber/pages/about_us.dart';
+import 'package:smartfiber/pages/real_time_scanning_page.dart';
 import 'package:smartfiber/pages/scan_result_page.dart';
 import 'package:smartfiber/pages/smart_scan_page.dart';
 import 'package:smartfiber/services/image_picker_service.dart';
@@ -112,6 +113,12 @@ class _ToolbarState extends State<Toolbar> {
           icon: Icons.info,
           ontap: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutUs())),
+        ),
+        ToolbarButton(
+          label: "Realtime Scanning",
+          icon: Icons.video_camera_back_outlined,
+          ontap: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const RealTimeScanningPage())),
         ),
         // ToolbarButton(
         //   label: "Model info",
